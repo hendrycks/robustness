@@ -77,6 +77,7 @@ def default_loader(path):
     else:
         return pil_loader(path)
 
+
 class DistortImageFolder(data.Dataset):
     def __init__(self, root, method, severity, transform=None, target_transform=None,
                  loader=default_loader):
@@ -106,15 +107,15 @@ class DistortImageFolder(data.Dataset):
         if self.target_transform is not None:
             target = self.target_transform(target)
 
-        save_path = '/share/data/vision-greg/DistortedImageNet/' + self.method.__name__ +\
+        save_path = '/share/data/vision-greg/DistortedImageNet/JPEG/' + self.method.__name__ +\
                     '/' + str(self.severity) + '/' + self.idx_to_class[target]
 
         if not os.path.exists(save_path):
             os.makedirs(save_path)
 
-        save_path += path[path.rindex('/'):-4] + 'png'     # -4 to remove JPEG extension
+        save_path += path[path.rindex('/'):]
         
-        Image.fromarray(np.uint8(img)).save(save_path, optimize=True)
+        Image.fromarray(np.uint8(img)).save(save_path, quality=85, optimize=True)
 
         return 0    # we do not care about returning the data
 
@@ -266,7 +267,7 @@ def impulse_noise(x, severity=1):
 
 
 def speckle_noise(x, severity=1):
-    c = [.15, .2, 0.3, 0.4, 0.5][severity - 1]
+    c = [.15, .2, 0.35, 0.45, 0.6][severity - 1]
 
     x = np.array(x) / 255.
     return np.clip(x + x * np.random.normal(size=x.shape, scale=c), 0, 1) * 255
@@ -293,7 +294,7 @@ def gaussian_blur(x, severity=1):
 
 def glass_blur(x, severity=1):
     # sigma, max_delta, iterations
-    c = [(0.7,1,2), (0.9,2,1), (1,2,3), (1.25,4,2), (1.5,4,3)][severity - 1]
+    c = [(0.7,1,2), (0.9,2,1), (1,2,3), (1.1,3,2), (1.5,4,2)][severity - 1]
 
     x = np.uint8(gaussian(np.array(x) / 255., sigma=c[0], multichannel=True) * 255)
     
@@ -310,7 +311,7 @@ def glass_blur(x, severity=1):
 
 
 def defocus_blur(x, severity=1):
-    c = [(3, 0.1), (6, 0.5), (8, 0.5), (10, 0.5), (12, 0.5)][severity - 1]
+    c = [(3, 0.1), (4, 0.5), (6, 0.5), (8, 0.5), (10, 0.5)][severity - 1]
 
     x = np.array(x) / 255.
     kernel = disk(radius=c[0], alias_blur=c[1])
@@ -324,7 +325,7 @@ def defocus_blur(x, severity=1):
 
 
 def motion_blur(x, severity=1):
-    c = [(10, 3), (15, 5), (15, 10), (15, 15), (20, 20)][severity - 1]
+    c = [(10, 3), (15, 5), (15, 8), (15, 12), (20, 15)][severity - 1]
 
     output = BytesIO()
     x.save(output, format='PNG')
@@ -342,8 +343,11 @@ def motion_blur(x, severity=1):
 
 
 def zoom_blur(x, severity=1):
-    c = [np.arange(1, 1.11, 0.01), np.arange(1, 1.21, 0.02), np.arange(1, 1.31, 0.03), np.arange(1, 1.41, 0.04),
-         np.arange(1, 1.71, 0.07)][severity - 1]
+    c = [np.arange(1, 1.11, 0.01),
+         np.arange(1, 1.16, 0.01),
+         np.arange(1, 1.21, 0.02),
+         np.arange(1, 1.26, 0.02),
+         np.arange(1, 1.31, 0.03)][severity - 1]
 
     x = (np.array(x) / 255.).astype(np.float32)
     out = np.zeros_like(x)
@@ -374,7 +378,7 @@ def zoom_blur(x, severity=1):
 
 
 def fog(x, severity=1):
-    c = [(1.5, 2), (2.5, 2), (3, 1.5), (3, 1.35), (4, 1.3)][severity - 1]
+    c = [(1.5, 2), (2, 2), (2.5, 1.7), (2.5, 1.5), (3, 1.4)][severity - 1]
 
     x = np.array(x) / 255.
     max_val = x.max()
@@ -383,7 +387,11 @@ def fog(x, severity=1):
 
 
 def frost(x, severity=1):
-    c = [(0.9, 0.3), (0.8, 0.4), (0.7, 0.6), (0.55, 0.7), (0.5, 0.85)][severity - 1]
+    c = [(1, 0.4),
+         (0.8, 0.6),
+         (0.7, 0.7),
+         (0.65, 0.7),
+         (0.6, 0.75)][severity - 1]
     idx = np.random.randint(5)
     filename = ['./frost1.png', './frost2.png', './frost3.png', './frost4.jpg', './frost5.jpg', './frost6.jpg'][idx]
     frost = cv2.imread(filename)
@@ -423,11 +431,11 @@ def snow(x, severity=1):
 
 
 def spatter(x, severity=1):
-    c = [(0.65, 0.3, 3, 0.68, 0.6, 0),
-         (0.65, 0.3, 2, 0.66, 0.5, 0),
-         (0.6, 0.3, 2.5, 0.6, 0.5, 0),
-         (0.65, 0.3, 1, 0.65, 1.5, 1),
-         (0.7, 0.5, 1, 0.65, 1.5, 1)][severity - 1]
+    c = [(0.65,0.3,4,0.69,0.6,0),
+         (0.65,0.3,3,0.68,0.6,0),
+         (0.65,0.3,2,0.68,0.5,0),
+         (0.65,0.3,1,0.65,1.5,1),
+         (0.67,0.4,1,0.65,1.5,1)][severity - 1]
     x = np.array(x, dtype=np.float32) / 255.
 
     liquid_layer = np.random.normal(size=x.shape[:2], loc=c[0], scale=c[1])
@@ -477,7 +485,7 @@ def spatter(x, severity=1):
         return np.clip(x + color, 0, 1) * 255
 
 
-def adjust_constrast(x, severity=1):
+def constrast(x, severity=1):
     c = [0.4, .3, .2, .1, .05][severity - 1]
 
     x = np.array(x) / 255.
@@ -485,8 +493,8 @@ def adjust_constrast(x, severity=1):
     return np.clip((x - means) * c + means, 0, 1) * 255
 
 
-def adjust_brightness(x, severity=1):
-    c = [.3, .4, .53, .65, 0.75][severity - 1]
+def brightness(x, severity=1):
+    c = [.1, .2, .3, .4, .5][severity - 1]
 
     x = np.array(x) / 255.
     x = sk.color.rgb2hsv(x)
@@ -497,7 +505,7 @@ def adjust_brightness(x, severity=1):
 
 
 def saturate(x, severity=1):
-    c = [(0.3, 0), (5, 0), (10, 0), (50, 0), (1000, 0.98)][severity - 1]
+    c = [(0.3, 0), (0.1, 0), (2, 0), (5, 0.1), (20, 0.2)][severity - 1]
 
     x = np.array(x) / 255.
     x = sk.color.rgb2hsv(x)
@@ -508,7 +516,7 @@ def saturate(x, severity=1):
 
 
 def jpeg_compression(x, severity=1):
-    c = [15, 10, 8, 5, 3][severity - 1]
+    c = [25, 18, 15, 10, 7][severity - 1]
 
     output = BytesIO()
     x.save(output, 'JPEG', quality=c)
@@ -518,7 +526,7 @@ def jpeg_compression(x, severity=1):
 
 
 def pixelate(x, severity=1):
-    c = [0.5, 0.4, 0.3, 0.25, 0.2][severity - 1]
+    c = [0.6, 0.5, 0.4, 0.3, 0.25][severity - 1]
 
     x = x.resize((int(224 * c), int(224 * c)), PILImage.BOX)
     x = x.resize((224, 224), PILImage.BOX)
@@ -568,14 +576,14 @@ def elastic_transform(image, severity=1):
 
 def save_distorted(method=gaussian_noise):
 
-    for severity in range(1, 6):
+    for severity in range(3, 4):
         print(method.__name__, severity)
         distorted_dataset = DistortImageFolder(
             root="/share/data/vision-greg/ImageNet/clsloc/images/val",
             method=method, severity=severity,
             transform=trn.Compose([trn.Resize(256), trn.CenterCrop(224)]))
         distorted_dataset_loader = torch.utils.data.DataLoader(
-            distorted_dataset, batch_size=100, shuffle=False, num_workers=10)
+            distorted_dataset, batch_size=100, shuffle=False, num_workers=4)
 
         for _ in distorted_dataset_loader: continue
 
@@ -599,15 +607,15 @@ d['Zoom Blur'] = zoom_blur
 d['Snow'] = snow
 d['Spatter'] = spatter
 d['Fog'] = fog
-d['Brightness'] = adjust_brightness
-d['Contrast'] = adjust_constrast
+d['Brightness'] = brightness
+d['Contrast'] = constrast
 d['Saturate'] = saturate
 d['JPEG'] = jpeg_compression
 d['Elastic'] = elastic_transform
 d['Pixelate']       = pixelate
 d['Speckle Noise']  = speckle_noise
-d['Glass Blur']  = glass_blur
 d['Frost']  = frost
+d['Glass Blur']  = glass_blur
 
 for method_name in d.keys():
     save_distorted(d[method_name])

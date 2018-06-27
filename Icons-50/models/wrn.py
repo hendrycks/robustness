@@ -1,175 +1,96 @@
-# coding: utf-8
-
+import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.autograd import Variable
-
-
-def initialize_weights(module):
-    if isinstance(module, nn.Conv2d):
-        nn.init.kaiming_normal(module.weight.data, mode='fan_in')
-    elif isinstance(module, nn.BatchNorm2d):
-        module.weight.data.uniform_()
-        module.bias.data.zero_()
-    elif isinstance(module, nn.Linear):
-        module.bias.data.zero_()
 
 
 class BasicBlock(nn.Module):
-    def __init__(self, in_channels, out_channels, stride, drop_rate):
+    def __init__(self, in_planes, out_planes, stride, dropRate=0.0):
         super(BasicBlock, self).__init__()
-
-        self.drop_rate = drop_rate
-
-        self._preactivate_both = (in_channels != out_channels)
-
-        self.bn1 = nn.BatchNorm2d(in_channels)
-        self.conv1 = nn.Conv2d(
-            in_channels,
-            out_channels,
-            kernel_size=3,
-            stride=stride,  # downsample with first conv
-            padding=1,
-            bias=False)
-
-        self.bn2 = nn.BatchNorm2d(out_channels)
-        self.conv2 = nn.Conv2d(
-            out_channels,
-            out_channels,
-            kernel_size=3,
-            stride=1,
-            padding=1,
-            bias=False)
-
-        self.shortcut = nn.Sequential()
-        if in_channels != out_channels:
-            self.shortcut.add_module(
-                'conv',
-                nn.Conv2d(
-                    in_channels,
-                    out_channels,
-                    kernel_size=1,
-                    stride=stride,  # downsample
-                    padding=0,
-                    bias=False))
+        self.bn1 = nn.BatchNorm2d(in_planes)
+        self.relu1 = nn.ReLU(inplace=True)
+        self.conv1 = nn.Conv2d(in_planes, out_planes, kernel_size=3, stride=stride,
+                               padding=1, bias=False)
+        self.bn2 = nn.BatchNorm2d(out_planes)
+        self.relu2 = nn.ReLU(inplace=True)
+        self.conv2 = nn.Conv2d(out_planes, out_planes, kernel_size=3, stride=1,
+                               padding=1, bias=False)
+        self.droprate = dropRate
+        self.equalInOut = (in_planes == out_planes)
+        self.convShortcut = (not self.equalInOut) and nn.Conv2d(in_planes, out_planes, kernel_size=1, stride=stride,
+                                                                padding=0, bias=False) or None
 
     def forward(self, x):
-        if self._preactivate_both:
-            x = F.relu(
-                self.bn1(x), inplace=True)  # shortcut after preactivation
-            y = self.conv1(x)
+        if not self.equalInOut:
+            x = self.relu1(self.bn1(x))
         else:
-            y = F.relu(
-                self.bn1(x),
-                inplace=True)  # preactivation only for residual path
-            y = self.conv1(y)
-        if self.drop_rate > 0:
-            y = F.dropout(
-                y, p=self.drop_rate, training=self.training, inplace=False)
+            out = self.relu1(self.bn1(x))
+        if self.equalInOut:
+            out = self.relu2(self.bn2(self.conv1(out)))
+        else:
+            out = self.relu2(self.bn2(self.conv1(x)))
+        if self.droprate > 0:
+            out = F.dropout(out, p=self.droprate, training=self.training)
+        out = self.conv2(out)
+        if not self.equalInOut:
+            return torch.add(self.convShortcut(x), out)
+        else:
+            return torch.add(x, out)
 
-        y = F.relu(self.bn2(y), inplace=True)
-        y = self.conv2(y)
-        y += self.shortcut(x)
-        return y
 
+class NetworkBlock(nn.Module):
+    def __init__(self, nb_layers, in_planes, out_planes, block, stride, dropRate=0.0):
+        super(NetworkBlock, self).__init__()
+        self.layer = self._make_layer(block, in_planes, out_planes, nb_layers, stride, dropRate)
 
-class Network(nn.Module):
-    def __init__(self, config):
-        super(Network, self).__init__()
-
-        input_shape = config['input_shape']
-        n_classes = config['n_classes']
-
-        base_channels = config['base_channels']
-        widening_factor = config['widening_factor']
-        drop_rate = config['drop_rate']
-        depth = config['depth']
-
-        block = BasicBlock
-        n_blocks_per_stage = (depth - 4) // 6
-        assert n_blocks_per_stage * 6 + 4 == depth
-
-        n_channels = [
-            base_channels,
-            base_channels * widening_factor,
-            base_channels * 2 * widening_factor,
-            base_channels * 4 * widening_factor
-        ]
-
-        self.conv = nn.Conv2d(
-            input_shape[1],
-            n_channels[0],
-            kernel_size=3,
-            stride=1,
-            padding=1,
-            bias=False)
-
-        self.stage1 = self._make_stage(
-            n_channels[0],
-            n_channels[1],
-            n_blocks_per_stage,
-            block,
-            stride=1,
-            drop_rate=drop_rate)
-        self.stage2 = self._make_stage(
-            n_channels[1],
-            n_channels[2],
-            n_blocks_per_stage,
-            block,
-            stride=2,
-            drop_rate=drop_rate)
-        self.stage3 = self._make_stage(
-            n_channels[2],
-            n_channels[3],
-            n_blocks_per_stage,
-            block,
-            stride=2,
-            drop_rate=drop_rate)
-        self.bn = nn.BatchNorm2d(n_channels[3])
-
-        # compute conv feature size
-        self.feature_size = self._forward_conv(
-            Variable(torch.zeros(*input_shape),
-                     volatile=True)).view(-1).shape[0]
-
-        self.fc = nn.Linear(self.feature_size, n_classes)
-
-        # initialize weights
-        self.apply(initialize_weights)
-
-    def _make_stage(self, in_channels, out_channels, n_blocks, block, stride,
-                    drop_rate):
-        stage = nn.Sequential()
-        for index in range(n_blocks):
-            block_name = 'block{}'.format(index + 1)
-            if index == 0:
-                stage.add_module(block_name,
-                                 block(
-                                     in_channels,
-                                     out_channels,
-                                     stride=stride,
-                                     drop_rate=drop_rate))
-            else:
-                stage.add_module(block_name,
-                                 block(
-                                     out_channels,
-                                     out_channels,
-                                     stride=1,
-                                     drop_rate=drop_rate))
-        return stage
-
-    def _forward_conv(self, x):
-        x = self.conv(x)
-        x = self.stage1(x)
-        x = self.stage2(x)
-        x = self.stage3(x)
-        x = F.relu(self.bn(x), inplace=True)
-        x = F.adaptive_avg_pool2d(x, output_size=1)
-        return x
+    def _make_layer(self, block, in_planes, out_planes, nb_layers, stride, dropRate):
+        layers = []
+        for i in range(nb_layers):
+            layers.append(block(i == 0 and in_planes or out_planes, out_planes, i == 0 and stride or 1, dropRate))
+        return nn.Sequential(*layers)
 
     def forward(self, x):
-        x = self._forward_conv(x)
-        x = x.view(x.size(0), -1)
-        x = self.fc(x)
-        return x
+        return self.layer(x)
+
+
+class WideResNet(nn.Module):
+    def __init__(self, depth, num_classes, widen_factor=1, dropRate=0.0):
+        super(WideResNet, self).__init__()
+        nChannels = [16, 16 * widen_factor, 32 * widen_factor, 64 * widen_factor]
+        assert ((depth - 4) % 6 == 0)
+        n = (depth - 4) // 6
+        block = BasicBlock
+        # 1st conv before any network block
+        self.conv1 = nn.Conv2d(3, nChannels[0], kernel_size=3, stride=1,
+                               padding=1, bias=False)
+        # 1st block
+        self.block1 = NetworkBlock(n, nChannels[0], nChannels[1], block, 1, dropRate)
+        # 2nd block
+        self.block2 = NetworkBlock(n, nChannels[1], nChannels[2], block, 2, dropRate)
+        # 3rd block
+        self.block3 = NetworkBlock(n, nChannels[2], nChannels[3], block, 2, dropRate)
+        # global average pooling and classifier
+        self.bn1 = nn.BatchNorm2d(nChannels[3])
+        self.relu = nn.ReLU(inplace=True)
+        self.fc = nn.Linear(nChannels[3], num_classes)
+        self.nChannels = nChannels[3]
+
+        for m in self.modules():
+            if isinstance(m, nn.Conv2d):
+                n = m.kernel_size[0] * m.kernel_size[1] * m.out_channels
+                m.weight.data.normal_(0, math.sqrt(2. / n))
+            elif isinstance(m, nn.BatchNorm2d):
+                m.weight.data.fill_(1)
+                m.bias.data.zero_()
+            elif isinstance(m, nn.Linear):
+                m.bias.data.zero_()
+
+    def forward(self, x):
+        out = self.conv1(x)
+        out = self.block1(out)
+        out = self.block2(out)
+        out = self.block3(out)
+        out = self.relu(self.bn1(out))
+        out = F.avg_pool2d(out, 8)
+        out = out.view(-1, self.nChannels)
+        return self.fc(out)

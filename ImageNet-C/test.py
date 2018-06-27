@@ -22,7 +22,8 @@ parser = argparse.ArgumentParser(description='Evaluates robustness of various ne
                                  formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 # Architecture
 parser.add_argument('--model-name', '-m', type=str,
-                    choices=['alexnet', 'squeezenet1.0', 'squeezenet1.1', 'condensenet4', 'condensenet8','vgg', 'vggbn',
+                    choices=['alexnet', 'squeezenet1.0', 'squeezenet1.1', 'condensenet4', 'condensenet8',
+                             'vgg11', 'vgg', 'vggbn',
                              'densenet121', 'densenet169', 'densenet201', 'densenet161', 'densenet264',
                              'resnet18', 'resnet34', 'resnet50', 'resnet101', 'resnet152',
                              'resnext50', 'resnext101', 'resnext101_64'])
@@ -93,6 +94,10 @@ elif 'vgg' in args.model_name:
     if 'bn' not in args.model_name:
         net = models.vgg19()
         net.load_state_dict(model_zoo.load_url('https://download.pytorch.org/models/vgg19-dcbb9e9d.pth',
+                                               model_dir='/share/data/lang/users/dan/.torch/models'))
+    elif '11' in args.model_name:
+        net = models.vgg11()
+        net.load_state_dict(model_zoo.load_url('https://download.pytorch.org/models/vgg11-bbd30ac9.pth',
                                                model_dir='/share/data/lang/users/dan/.torch/models'))
     else:
         net = models.vgg19_bn()
@@ -175,7 +180,7 @@ elif args.model_name == 'resnext101_64':
     net.load_state_dict(torch.load('/share/data/lang/users/dan/.torch/models/resnext_101_64x4d.pth'))
     args.test_bs = 64
 
-args.prefetch = 6
+args.prefetch = 4
 
 for p in net.parameters():
     p.volatile = True
@@ -217,26 +222,26 @@ def auc(errs):  # area under the distortion-error curve
     return area
 
 
-correct = 0
-for batch_idx, (data, target) in enumerate(clean_loader):
-    data = V(data.cuda(), volatile=True)
-
-    output = net(data)
-
-    pred = output.data.max(1)[1]
-    correct += pred.eq(target.cuda()).sum()
-
-clean_error = 1 - correct / len(clean_loader.dataset)
-print('Clean dataset error (%): {:.2f}'.format(100 * clean_error))
+# correct = 0
+# for batch_idx, (data, target) in enumerate(clean_loader):
+#     data = V(data.cuda(), volatile=True)
+#
+#     output = net(data)
+#
+#     pred = output.data.max(1)[1]
+#     correct += pred.eq(target.cuda()).sum()
+#
+# clean_error = 1 - correct / len(clean_loader.dataset)
+# print('Clean dataset error (%): {:.2f}'.format(100 * clean_error))
 
 
 def show_performance(distortion_name):
-    errs = [clean_error]
+    errs = []
 
     for severity in range(1, 6):
         distorted_dataset = dset.ImageFolder(
-            # root='/share/data/lang/users/dan/denoised/' + distortion_name + '/' + str(severity),
-            root='/share/data/vision-greg/DistortedImageNet/' + distortion_name + '/' + str(severity),
+            # root='/share/data/vision-greg/DistortedImageNet/JPEG/' + distortion_name + '/' + str(severity),
+            root='/share/data/lang/users/dan/denoised/' + distortion_name + '/' + str(severity),
             transform=trn.Compose([trn.CenterCrop(224), trn.ToTensor(), trn.Normalize(mean, std)]))
 
         distorted_dataset_loader = torch.utils.data.DataLoader(
@@ -253,8 +258,8 @@ def show_performance(distortion_name):
 
         errs.append(1 - correct / len(distorted_dataset))
 
-    print(errs)
-    return auc(errs)
+    print('\n=Average', tuple(errs))
+    return np.mean(errs)
 
 
 # /////////////// End Further Setup ///////////////
@@ -267,26 +272,22 @@ print('\nUsing ImageNet data')
 
 distortions = [
     'gaussian_noise', 'shot_noise', 'impulse_noise',
-    'defocus_blur',
-    'glass_blur', 'motion_blur', 'zoom_blur',
-    'snow',
-    'frost',
-    'fog', 'adjust_brightness',
-    'adjust_constrast', 'elastic_transform',
-    'pixelate', 'jpeg_compression',
-    'speckle_noise',
-    'gaussian_blur',
-    'spatter',
-    'saturate'
+    'defocus_blur', 'glass_blur', 'motion_blur', 'zoom_blur',
+    'snow', 'frost', 'fog', 'brightness',
+    'contrast', 'elastic_transform', 'pixelate', 'jpeg_compression',
+    'speckle_noise', 'gaussian_blur', 'spatter', 'saturate', 'style'
 ]
 
-# distortions = ['speckle_noise', 'snow', 'fog', 'frost', 'pixelate', 'glass_blur']
+#distortions = [
+#    'contrast', 'elastic_transform', 'pixelate', 'jpeg_compression',
+#]
 
-audes = []
+error_rates = []
 for distortion_name in distortions:
-    aude = show_performance(distortion_name)
-    audes.append(aude)
-    print('Distortion: {:15s}  |  AUDE (%): {:.2f}'.format(distortion_name, 100 * aude))
+    rate = show_performance(distortion_name)
+    error_rates.append(rate)
+    print('Distortion: {:15s}  | CE (unnormalized) (%): {:.2f}'.format(distortion_name, 100 * rate))
 
-print('Mean AUDE (%): {:.2f}'.format(100 * np.mean(audes)))
-print('Relative Error (%): {:.2f}'.format(100 * np.mean(audes) - 100 * clean_error))
+
+print('mCE (unnormalized by AlexNet errors) (%): {:.2f}'.format(100 * np.mean(error_rates)))
+

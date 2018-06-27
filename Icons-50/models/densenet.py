@@ -3,12 +3,11 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.autograd import Variable
 
 
 def initialize_weights(m):
     if isinstance(m, nn.Conv2d):
-        nn.init.kaiming_normal(m.weight.data, mode='fan_out')
+        nn.init.kaiming_normal_(m.weight.data, mode='fan_out')
     elif isinstance(m, nn.BatchNorm2d):
         m.weight.data.fill_(1)
         m.bias.data.zero_()
@@ -101,9 +100,9 @@ class TransitionBlock(nn.Module):
         return x
 
 
-class Network(nn.Module):
+class DenseNet(nn.Module):
     def __init__(self, config):
-        super(Network, self).__init__()
+        super(DenseNet, self).__init__()
 
         input_shape = config['input_shape']
         n_classes = config['n_classes']
@@ -152,8 +151,7 @@ class Network(nn.Module):
 
         # compute conv feature size
         self.feature_size = self._forward_conv(
-            Variable(torch.zeros(*input_shape),
-                     volatile=True)).view(-1).shape[0]
+            torch.zeros(*input_shape)).view(-1).shape[0]
 
         self.fc = nn.Linear(self.feature_size, n_classes)
 
@@ -188,3 +186,4 @@ class Network(nn.Module):
         x = x.view(x.size(0), -1)
         x = self.fc(x)
         return x
+

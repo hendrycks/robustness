@@ -3,9 +3,54 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.autograd import Variable
+from torch.autograd import Function
 
-from functions.shake_shake_function import get_alpha_beta, shake_function
+
+class ShakeFunction(Function):
+    @staticmethod
+    def forward(ctx, x1, x2, alpha, beta):
+        ctx.save_for_backward(x1, x2, alpha, beta)
+
+        y = x1 * alpha.data + x2 * (1 - alpha.data)
+        return y
+
+    @staticmethod
+    def backward(ctx, grad_output):
+        x1, x2, alpha, beta = ctx.saved_variables
+        grad_x1 = grad_x2 = grad_alpha = grad_beta = None
+
+        if ctx.needs_input_grad[0]:
+            grad_x1 = grad_output * beta
+        if ctx.needs_input_grad[1]:
+            grad_x2 = grad_output * (1 - beta)
+
+        return grad_x1, grad_x2, grad_alpha, grad_beta
+
+
+shake_function = ShakeFunction.apply
+
+
+def get_alpha_beta(batch_size, shake_config, is_cuda):
+    forward_shake, backward_shake, shake_image = shake_config
+
+    if forward_shake and not shake_image:
+        alpha = torch.rand(1)
+    elif forward_shake and shake_image:
+        alpha = torch.rand(batch_size).view(batch_size, 1, 1, 1)
+    else:
+        alpha = torch.tensor(0.5)
+
+    if backward_shake and not shake_image:
+        beta = torch.rand(1)
+    elif backward_shake and shake_image:
+        beta = torch.rand(batch_size).view(batch_size, 1, 1, 1)
+    else:
+        beta = torch.tensor(0.5)
+
+    if is_cuda:
+        alpha, beta = alpha.cuda(), beta.cuda()
+
+    return alpha, beta
 
 
 def initialize_weights(module):
@@ -110,9 +155,9 @@ class BasicBlock(nn.Module):
         return self.shortcut(x) + y
 
 
-class Network(nn.Module):
+class ResNeXt(nn.Module):
     def __init__(self, config):
-        super(Network, self).__init__()
+        super(ResNeXt, self).__init__()
 
         input_shape = config['input_shape']
         n_classes = config['n_classes']
@@ -146,8 +191,7 @@ class Network(nn.Module):
 
         # compute conv feature size
         self.feature_size = self._forward_conv(
-            Variable(torch.zeros(*input_shape),
-                     volatile=True)).view(-1).shape[0]
+            torch.zeros(*input_shape)).view(-1).shape[0]
 
         self.fc = nn.Linear(self.feature_size, n_classes)
 
@@ -187,3 +231,4 @@ class Network(nn.Module):
         x = x.view(x.size(0), -1)
         x = self.fc(x)
         return x
+

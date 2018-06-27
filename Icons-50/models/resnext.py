@@ -3,12 +3,11 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.autograd import Variable
 
 
 def initialize_weights(m):
     if isinstance(m, nn.Conv2d):
-        nn.init.kaiming_normal(m.weight.data, mode='fan_out')
+        nn.init.kaiming_normal_(m.weight.data, mode='fan_out')
     elif isinstance(m, nn.BatchNorm2d):
         m.weight.data.fill_(1)
         m.bias.data.zero_()
@@ -74,9 +73,9 @@ class BottleneckBlock(nn.Module):
         return y
 
 
-class Network(nn.Module):
+class ResNeXt(nn.Module):
     def __init__(self, config):
-        super(Network, self).__init__()
+        super(ResNeXt, self).__init__()
 
         input_shape = config['input_shape']
         n_classes = config['n_classes']
@@ -112,10 +111,10 @@ class Network(nn.Module):
         self.stage3 = self._make_stage(
             n_channels[2], n_channels[3], n_blocks_per_stage, stride=2)
 
-        # compute conv feature size
-        self.feature_size = self._forward_conv(
-            Variable(torch.zeros(*input_shape),
-                     volatile=True)).view(-1).shape[0]
+        with torch.no_grad():
+            # compute conv feature size
+            self.feature_size = self._forward_conv(
+                torch.zeros(*input_shape)).view(-1).shape[0]
 
         self.fc = nn.Linear(self.feature_size, n_classes)
 
