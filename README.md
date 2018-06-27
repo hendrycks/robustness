@@ -4,7 +4,7 @@ This repository contains the datasets and some code for the paper _Benchmarking 
 
 Requires Python 3+ and PyTorch 0.3+.
 
-## ImageNet-D
+## ImageNet-C
 
 <img align="center" src="assets/imagenet-c.png" width="750">
 
