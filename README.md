@@ -1,6 +1,3 @@
----
-output: pdf_document
----
 # Benchmarking Neural Network Robustness to Common Corruptions and Surface Variations
 
 This repository contains the datasets and some code for the paper _Benchmarking Neural Network Robustness to Common Corruptions and Surface Variations_ by Dan Hendrycks and Tom Dietterich.
