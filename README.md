@@ -14,7 +14,7 @@ Requires Python 3+ and PyTorch 0.3+.
 
 <img align="center" src="assets/icons-50.png" width="750">
 
-[Download Icons-50 here.](https://drive.google.com/file/d/1TN5Igft9q01HZOuFlW7e8L1u5ksgVkn-/view?usp=sharing)
+[Download Icons-50 here.](https://drive.google.com/drive/folders/16_kaFo3uUoS-U8FTDm4nUh6Vo21UVnJX?usp=sharing)
 
 ## Citation
 
