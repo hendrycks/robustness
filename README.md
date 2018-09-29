@@ -16,7 +16,7 @@ Requires Python 3+ and PyTorch 0.3+.
 
 <img align="center" src="assets/translate.gif" width="224"> <img align="center" src="assets/tilt.gif" width="224"> <img align="center" src="assets/spatter.gif" width="224">
 
-<sub><sup>ImageNet-P sequences are MP4s not GIFs. The spatter perturbation sequence is a validation image.</sup></sub>
+<sub><sup>ImageNet-P sequences are MP4s not GIFs. The spatter perturbation sequence is a validation sequence.</sup></sub>
 
 [Download Tiny ImageNet-P here.](https://berkeley.box.com/s/19m2ppji0xsqgtkrs95329bqftbvncx9)
 
