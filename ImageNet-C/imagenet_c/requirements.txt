@@ -1,0 +1,6 @@
+numpy==1.14.0
+Pillow==5.0.0
+scikit-image==0.13.1
+Wand==0.4.4
+opencv-python==3.4.2.16
+scipy==1.0.0
