@@ -10,7 +10,7 @@ from imagenet_c import corrupt
 corrupt(<image>, corruption_number=0)
 ```
 
-This function  ```corrupt``` is
+The function  ```corrupt``` is
 ```
 corruption_tuple = (gaussian_noise, shot_noise, impulse_noise, defocus_blur,
                     glass_blur, motion_blur, zoom_blur, snow, frost, fog,
@@ -44,15 +44,3 @@ def corrupt(x, severity=1, corruption_name=None, corruption_number=-1):
 
     return np.uint8(x_corrupted)
 ```
-
-## Citation
-
-If you find this useful in your research, please consider citing:
-
-    @article{hendrycks2018robustness,
-      title={Benchmarking Neural Network Robustness to Common Corruptions and Perturbations},
-      author={Dan Hendrycks and Thomas Dietterich},
-      journal={arXiv preprint arXiv:1807.01697},
-      year={2018}
-    }
-
