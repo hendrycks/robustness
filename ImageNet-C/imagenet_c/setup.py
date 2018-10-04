@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="imagenet_c",
-    version="0.0.1",
+    version="0.0.2",
     author="Dan Hendrycks",
     author_email="hendrycks@berkeley.edu",
     description="Access to ImageNet-C corruption functions",
