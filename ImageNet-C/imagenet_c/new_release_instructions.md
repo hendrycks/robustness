@@ -5,5 +5,5 @@ Bump the version in setup.py
 Run the following
 ```bash
 pip install twine
-python setup.py sdist bdist_wheel && twine upload dist/*
+rm -rf dist && python setup.py sdist bdist_wheel && twine upload dist/*
 ```
