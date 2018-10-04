@@ -20,6 +20,10 @@ setuptools.setup(
             "frost4.jpg", "frost5.jpg", "frost6.jpg"
         ],
     },
+    install_requires=[
+        'wand ~= 0.4',
+        'opencv-python ~= 3.4',
+    ],
     #include_package_data=True,
     classifiers=[
         "Programming Language :: Python :: 3",
