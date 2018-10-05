@@ -233,7 +233,7 @@ def zoom_blur(x, severity=1):
 
 
 def fog(x, severity=1):
-    c = [(1.5, 2), (2, 2), (2.5, 1.7), (2.5, 1.5), (3., 1.4)][severity - 1]
+    c = [(1.5, 2), (2., 2), (2.5, 1.7), (2.5, 1.5), (3., 1.4)][severity - 1]
 
     x = np.array(x) / 255.
     max_val = x.max()
