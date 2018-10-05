@@ -104,7 +104,7 @@ def plasma_fractal(mapsize=256, wibbledecay=3):
 def clipped_zoom(img, zoom_factor):
     h = img.shape[0]
     # ceil crop height(= crop width)
-    ch = int(np.ceil(h / zoom_factor))
+    ch = int(np.ceil(h / float(zoom_factor)))
 
     top = (h - ch) // 2
     img = scizoom(img[top:top + ch, top:top + ch], (zoom_factor, zoom_factor, 1), order=1)
@@ -130,7 +130,7 @@ def shot_noise(x, severity=1):
     c = [60, 25, 12, 5, 3][severity - 1]
 
     x = np.array(x) / 255.
-    return np.clip(np.random.poisson(x * c) / c, 0, 1) * 255
+    return np.clip(np.random.poisson(x * c) / float(c), 0, 1) * 255
 
 
 def impulse_noise(x, severity=1):
@@ -233,7 +233,7 @@ def zoom_blur(x, severity=1):
 
 
 def fog(x, severity=1):
-    c = [(1.5, 2), (2, 2), (2.5, 1.7), (2.5, 1.5), (3, 1.4)][severity - 1]
+    c = [(1.5, 2), (2, 2), (2.5, 1.7), (2.5, 1.5), (3., 1.4)][severity - 1]
 
     x = np.array(x) / 255.
     max_val = x.max()
@@ -425,4 +425,3 @@ def elastic_transform(image, severity=1):
 
 
 # /////////////// End Corruptions ///////////////
-
