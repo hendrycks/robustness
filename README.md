@@ -34,6 +34,8 @@ If you find this useful in your research, please consider citing:
       year={2018}
     }
 
+Part of the code was contributed by [Tom Brown](https://github.com/nottombrown).
+
 ## Icons-50 (From an Older Draft)
 
 <img align="center" src="assets/icons-50.png" width="750">
