@@ -12,6 +12,8 @@ Requires Python 3+ and PyTorch 0.3+.
 
 [Download ImageNet-C here.](https://drive.google.com/drive/folders/1HDVw6CmX3HiG0ODFtI75iIfBDxSiSz2K?usp=sharing)
 
+Tiny ImageNet-C has 200 classes with images of size 64x64, while ImageNet-C has all 1000 classes where each image is the standard size.
+
 ## ImageNet-P
 
 <img align="center" src="assets/translate.gif" width="224"> <img align="center" src="assets/tilt.gif" width="224"> <img align="center" src="assets/spatter.gif" width="224">
