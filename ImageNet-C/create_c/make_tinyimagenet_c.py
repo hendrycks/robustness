@@ -541,7 +541,7 @@ def save_distorted(method=gaussian_noise):
     for severity in range(1, 6):
         print(method.__name__, severity)
         distorted_dataset = DistortImageFolder(
-            root="/share/data/vision-greg/ImageNet/clsloc/images/val/",
+            root="./imagenet_val_bbox_crop/",
             method=method, severity=severity,
             transform=trn.Compose([trn.Resize((64, 64))]))
         distorted_dataset_loader = torch.utils.data.DataLoader(
