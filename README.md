@@ -8,7 +8,7 @@ Requires Python 3+ and PyTorch 0.3+.
 
 <img align="center" src="assets/imagenet-c.png" width="750">
 
-[Download Tiny ImageNet-C here.](https://berkeley.box.com/s/6zt1qzwm34hgdzcvi45svsb10zspop8a) [(Mirror.)](https://zenodo.org/record/2469796)
+[Download Tiny ImageNet-C here.](https://berkeley.box.com/s/6zt1qzwm34hgdzcvi45svsb10zspop8a) [(Mirror.)](https://zenodo.org/record/2536630)
 
 [Download ImageNet-C here.](https://drive.google.com/drive/folders/1HDVw6CmX3HiG0ODFtI75iIfBDxSiSz2K?usp=sharing) [(Mirror.)](https://zenodo.org/record/2235448)
 
@@ -20,7 +20,7 @@ Tiny ImageNet-C has 200 classes with images of size 64x64, while ImageNet-C has 
 
 <sub><sup>ImageNet-P sequences are MP4s not GIFs. The spatter perturbation sequence is a validation sequence.</sup></sub>
 
-[Download Tiny ImageNet-P here.](https://berkeley.box.com/s/19m2ppji0xsqgtkrs95329bqftbvncx9) [(Mirror.)](https://zenodo.org/record/2469796)
+[Download Tiny ImageNet-P here.](https://berkeley.box.com/s/19m2ppji0xsqgtkrs95329bqftbvncx9) [(Mirror.)](https://zenodo.org/record/2536630)
 
 [Download ImageNet-P here.](https://drive.google.com/drive/folders/1vRrDaWA6-_GaUZqOmovWrr4W34aiSLu7?usp=sharing)
 
