@@ -1,8 +1,21 @@
 # Benchmarking Neural Network Robustness to Common Corruptions and Perturbations
 
-This repository contains the datasets and some code for the paper [Benchmarking Neural Network Robustness to Common Corruptions and Perturbations](https://arxiv.org/abs/1807.01697) (ICLR 2019) by Dan Hendrycks and Tom Dietterich.
+This repository contains the datasets and some code for the paper [Benchmarking Neural Network Robustness to Common Corruptions and Perturbations](https://arxiv.org/abs/1807.01697) (ICLR 2019) by Dan Hendrycks and Thomas Dietterich.
 
 Requires Python 3+ and PyTorch 0.3+.
+
+## ImageNet-C Leaderboard
+
+ImageNet-C Robustness with a ResNet-50 Backbone
+
+|                Method               |                              Reference                             |   mCE   |
+|-------------------------------------|--------------------------------------------------------------------|:-------:|
+| Stylized ImageNet Data Augmentation | [Geirhos et al.](https://arxiv.org/pdf/1811.12231.pdf) (ICLR 2019) | 69.3%   |
+| ResNet-50 Baseline                  |                                                                    | 76.7%   |
+
+Other backbones can obtain better results. For example, a vanilla ResNeXt-101 has an mCE of 62.2%.
+
+Submit a pull request if you beat the state-of-the-art on ImageNet-C.
 
 ## ImageNet-C
 
@@ -40,7 +53,7 @@ Part of the code was contributed by [Tom Brown](https://github.com/nottombrown).
 
 ## Icons-50 (From an Older Draft)
 
-<img align="center" src="assets/icons-50.png" width="750">
+<img align="center" src="assets/icons-50.png" width="500">
 
 Download Icons-50 [here](https://berkeley.box.com/s/jcem6ik7rxr6594lg99kmrdo01ue6yjt) or [here.](https://drive.google.com/drive/folders/16_kaFo3uUoS-U8FTDm4nUh6Vo21UVnJX?usp=sharing)
 
