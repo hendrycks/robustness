@@ -1,6 +1,6 @@
 # Benchmarking Neural Network Robustness to Common Corruptions and Perturbations
 
-This repository contains the datasets and some code for the paper [Benchmarking Neural Network Robustness to Common Corruptions and Perturbations](https://arxiv.org/abs/1807.01697) (ICLR 2019) by Dan Hendrycks and Thomas Dietterich.
+This repository contains the datasets and some code for the paper [Benchmarking Neural Network Robustness to Common Corruptions and Perturbations](https://arxiv.org/abs/1903.12261) (ICLR 2019) by Dan Hendrycks and Thomas Dietterich.
 
 Requires Python 3+ and PyTorch 0.3+.
 
