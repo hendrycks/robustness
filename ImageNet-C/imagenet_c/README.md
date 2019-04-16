@@ -29,3 +29,5 @@ def corrupt(x, severity=1, corruption_name=None, corruption_number=-1):
     ...
 
 ```
+
+The "frost" corruption only works should the package be [installed from source](https://github.com/hendrycks/robustness/issues/4#issuecomment-427226016). 
