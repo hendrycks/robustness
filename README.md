@@ -25,7 +25,7 @@ Submit a pull request if you beat the state-of-the-art on ImageNet-C.
 
 [Download ImageNet-C here.](https://drive.google.com/drive/folders/1HDVw6CmX3HiG0ODFtI75iIfBDxSiSz2K?usp=sharing) [(Mirror.)](https://zenodo.org/record/2235448)
 
-Tiny ImageNet-C has 200 classes with images of size 64x64, while ImageNet-C has all 1000 classes where each image is the standard size. For even quicker experimentation, there is [CIFAR-10-C](https://zenodo.org/record/2535967), but improvements on CIFAR-10-C may be much less indicative of ImageNet-C improvements.
+Tiny ImageNet-C has 200 classes with images of size 64x64, while ImageNet-C has all 1000 classes where each image is the standard size. For even quicker experimentation, there is [CIFAR-10-C](https://zenodo.org/record/2535967), but improvements on CIFAR-10-C may be much less indicative of ImageNet-C improvements. Evaluation using the JPEGs above is strongly prefered to computing the corruptions in memory, so that evaluation is deterministic and consistent.
 
 ## ImageNet-P
 
