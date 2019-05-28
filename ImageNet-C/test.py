@@ -240,8 +240,7 @@ def show_performance(distortion_name):
 
     for severity in range(1, 6):
         distorted_dataset = dset.ImageFolder(
-            # root='/share/data/vision-greg/DistortedImageNet/JPEG/' + distortion_name + '/' + str(severity),
-            root='/share/data/lang/users/dan/denoised/' + distortion_name + '/' + str(severity),
+            root='/share/data/vision-greg/DistortedImageNet/JPEG/' + distortion_name + '/' + str(severity),
             transform=trn.Compose([trn.CenterCrop(224), trn.ToTensor(), trn.Normalize(mean, std)]))
 
         distorted_dataset_loader = torch.utils.data.DataLoader(
@@ -256,7 +255,7 @@ def show_performance(distortion_name):
             pred = output.data.max(1)[1]
             correct += pred.eq(target.cuda()).sum()
 
-        errs.append(1 - correct / len(distorted_dataset))
+        errs.append(1 - 1.*correct / len(distorted_dataset))
 
     print('\n=Average', tuple(errs))
     return np.mean(errs)
@@ -275,12 +274,8 @@ distortions = [
     'defocus_blur', 'glass_blur', 'motion_blur', 'zoom_blur',
     'snow', 'frost', 'fog', 'brightness',
     'contrast', 'elastic_transform', 'pixelate', 'jpeg_compression',
-    'speckle_noise', 'gaussian_blur', 'spatter', 'saturate', 'style'
+    'speckle_noise', 'gaussian_blur', 'spatter', 'saturate'
 ]
-
-#distortions = [
-#    'contrast', 'elastic_transform', 'pixelate', 'jpeg_compression',
-#]
 
 error_rates = []
 for distortion_name in distortions:
