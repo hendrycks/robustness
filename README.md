@@ -2,7 +2,17 @@
 
 This repository contains the datasets and some code for the paper [Benchmarking Neural Network Robustness to Common Corruptions and Perturbations](https://arxiv.org/abs/1903.12261) (ICLR 2019) by Dan Hendrycks and Thomas Dietterich.
 
-Requires Python 3+ and PyTorch 0.3+.
+Requires Python 3+ and PyTorch 0.3+. For evaluation, please download the data from the links below.
+
+## ImageNet-C
+
+<img align="center" src="assets/imagenet-c.png" width="750">
+
+[Download ImageNet-C here.](https://drive.google.com/drive/folders/1HDVw6CmX3HiG0ODFtI75iIfBDxSiSz2K?usp=sharing) [(Mirror.)](https://zenodo.org/record/2235448)
+
+[Download Tiny ImageNet-C here.](https://berkeley.box.com/s/6zt1qzwm34hgdzcvi45svsb10zspop8a) [(Mirror.)](https://zenodo.org/record/2536630)
+
+Tiny ImageNet-C has 200 classes with images of size 64x64, while ImageNet-C has all 1000 classes where each image is the standard size. For even quicker experimentation, there is [CIFAR-10-C](https://zenodo.org/record/2535967), but improvements on CIFAR-10-C may be much less indicative of ImageNet-C improvements. Evaluation using the JPEGs above is strongly prefered to computing the corruptions in memory, so that evaluation is deterministic and consistent.
 
 ## ImageNet-C Leaderboard
 
@@ -17,27 +27,6 @@ Other backbones can obtain better results. For example, a vanilla ResNeXt-101 ha
 
 Submit a pull request if you beat the state-of-the-art on ImageNet-C.
 
-## ImageNet-C
-
-<img align="center" src="assets/imagenet-c.png" width="750">
-
-[Download Tiny ImageNet-C here.](https://berkeley.box.com/s/6zt1qzwm34hgdzcvi45svsb10zspop8a) [(Mirror.)](https://zenodo.org/record/2536630)
-
-[Download ImageNet-C here.](https://drive.google.com/drive/folders/1HDVw6CmX3HiG0ODFtI75iIfBDxSiSz2K?usp=sharing) [(Mirror.)](https://zenodo.org/record/2235448)
-
-Tiny ImageNet-C has 200 classes with images of size 64x64, while ImageNet-C has all 1000 classes where each image is the standard size. For even quicker experimentation, there is [CIFAR-10-C](https://zenodo.org/record/2535967), but improvements on CIFAR-10-C may be much less indicative of ImageNet-C improvements. Evaluation using the JPEGs above is strongly prefered to computing the corruptions in memory, so that evaluation is deterministic and consistent.
-
-## ImageNet-P
-
-<img align="center" src="assets/translate.gif" width="224"> <img align="center" src="assets/tilt.gif" width="224"> <img align="center" src="assets/spatter.gif" width="224">
-
-<sub><sup>ImageNet-P sequences are MP4s not GIFs. The spatter perturbation sequence is a validation sequence.</sup></sub>
-
-[Download Tiny ImageNet-P here.](https://berkeley.box.com/s/19m2ppji0xsqgtkrs95329bqftbvncx9) [(Mirror.)](https://zenodo.org/record/2536630)
-
-[Download ImageNet-P here.](https://drive.google.com/drive/folders/1vRrDaWA6-_GaUZqOmovWrr4W34aiSLu7?usp=sharing)
-
-
 ## Citation
 
 If you find this useful in your research, please consider citing:
@@ -50,6 +39,16 @@ If you find this useful in your research, please consider citing:
     }
 
 Part of the code was contributed by [Tom Brown](https://github.com/nottombrown).
+
+## ImageNet-P
+
+<img align="center" src="assets/translate.gif" width="224"> <img align="center" src="assets/tilt.gif" width="224"> <img align="center" src="assets/spatter.gif" width="224">
+
+<sub><sup>ImageNet-P sequences are MP4s not GIFs. The spatter perturbation sequence is a validation sequence.</sup></sub>
+
+[Download Tiny ImageNet-P here.](https://berkeley.box.com/s/19m2ppji0xsqgtkrs95329bqftbvncx9) [(Mirror.)](https://zenodo.org/record/2536630)
+
+[Download ImageNet-P here.](https://drive.google.com/drive/folders/1vRrDaWA6-_GaUZqOmovWrr4W34aiSLu7?usp=sharing)
 
 ## Icons-50 (From an Older Draft)
 
