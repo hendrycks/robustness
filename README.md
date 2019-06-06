@@ -27,6 +27,27 @@ Other backbones can obtain better results. For example, a vanilla ResNeXt-101 ha
 
 Submit a pull request if you beat the state-of-the-art on ImageNet-C.
 
+## ImageNet-P
+
+<img align="center" src="assets/translate.gif" width="224"> <img align="center" src="assets/tilt.gif" width="224"> <img align="center" src="assets/spatter.gif" width="224">
+
+<sub><sup>ImageNet-P sequences are MP4s not GIFs. The spatter perturbation sequence is a validation sequence.</sup></sub>
+
+[Download Tiny ImageNet-P here.](https://berkeley.box.com/s/19m2ppji0xsqgtkrs95329bqftbvncx9) [(Mirror.)](https://zenodo.org/record/2536630)
+
+[Download ImageNet-P here.](https://drive.google.com/drive/folders/1vRrDaWA6-_GaUZqOmovWrr4W34aiSLu7?usp=sharing)
+
+## ImageNet-P Leaderboard
+
+ImageNet-P Perturbation Robustness with a ResNet-50 Backbone
+
+|                Method               |                              Reference                             |   mFR   |   mT5D   |
+|-------------------------------------|--------------------------------------------------------------------|:-------:|:-------:|
+| Low Pass Filter Pooling (bin-5)     | [Zhang](https://arxiv.org/abs/1904.11486) (ICML 2019)              | 69.3%   | 71.9%   |
+| ResNet-50 Baseline                  |                                                                    | 58.0%   | 78.4%   |
+
+Submit a pull request if you beat the state-of-the-art on ImageNet-P.
+
 ## Citation
 
 If you find this useful in your research, please consider citing:
@@ -39,16 +60,6 @@ If you find this useful in your research, please consider citing:
     }
 
 Part of the code was contributed by [Tom Brown](https://github.com/nottombrown).
-
-## ImageNet-P
-
-<img align="center" src="assets/translate.gif" width="224"> <img align="center" src="assets/tilt.gif" width="224"> <img align="center" src="assets/spatter.gif" width="224">
-
-<sub><sup>ImageNet-P sequences are MP4s not GIFs. The spatter perturbation sequence is a validation sequence.</sup></sub>
-
-[Download Tiny ImageNet-P here.](https://berkeley.box.com/s/19m2ppji0xsqgtkrs95329bqftbvncx9) [(Mirror.)](https://zenodo.org/record/2536630)
-
-[Download ImageNet-P here.](https://drive.google.com/drive/folders/1vRrDaWA6-_GaUZqOmovWrr4W34aiSLu7?usp=sharing)
 
 ## Icons-50 (From an Older Draft)
 
