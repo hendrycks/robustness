@@ -43,7 +43,7 @@ ImageNet-P Perturbation Robustness with a ResNet-50 Backbone
 
 |                Method               |                              Reference                             |   mFR   |   mT5D   |
 |-------------------------------------|--------------------------------------------------------------------|:-------:|:-------:|
-| Low Pass Filter Pooling (bin-5)     | [Zhang](https://arxiv.org/abs/1904.11486) (ICML 2019)              | 69.3%   | 71.9%   |
+| Low Pass Filter Pooling (bin-5)     | [Zhang](https://arxiv.org/abs/1904.11486) (ICML 2019)              | 51.2%   | 71.9%   |
 | ResNet-50 Baseline                  |                                                                    | 58.0%   | 78.4%   |
 
 Submit a pull request if you beat the state-of-the-art on ImageNet-P.
