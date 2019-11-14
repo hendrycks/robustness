@@ -20,6 +20,7 @@ ImageNet-C Robustness with a ResNet-50 Backbone
 
 |                Method               |                              Reference                             |   mCE   |
 |-------------------------------------|--------------------------------------------------------------------|:-------:|
+| Noisy Student                       | [Xie et al.](https://arxiv.org/pdf/1911.04252.pdf)                 | 31.2%   |
 | Stylized ImageNet Data Augmentation | [Geirhos et al.](https://arxiv.org/pdf/1811.12231.pdf) (ICLR 2019) | 69.3%   |
 | ResNet-50 Baseline                  |                                                                    | 76.7%   |
 
@@ -69,6 +70,7 @@ ImageNet-P Perturbation Robustness with a ResNet-50 Backbone
 
 |                Method               |                              Reference                             |   mFR   |   mT5D   |
 |-------------------------------------|--------------------------------------------------------------------|:-------:|:-------:|
+| Noisy Student                       | [Xie et al.](https://arxiv.org/pdf/1911.04252.pdf)                 | 16.1%   |         |
 | Low Pass Filter Pooling (bin-5)     | [Zhang](https://arxiv.org/abs/1904.11486) (ICML 2019)              | 51.2%   | 71.9%   |
 | ResNet-50 Baseline                  |                                                                    | 58.0%   | 78.4%   |
 
