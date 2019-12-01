@@ -12,7 +12,7 @@ Requires Python 3+ and PyTorch 0.3+. For evaluation, please download the data fr
 
 [Download Tiny ImageNet-C here.](https://berkeley.box.com/s/6zt1qzwm34hgdzcvi45svsb10zspop8a) [(Mirror.)](https://zenodo.org/record/2536630)
 
-Tiny ImageNet-C has 200 classes with images of size 64x64, while ImageNet-C has all 1000 classes where each image is the standard size. For even quicker experimentation, there is [CIFAR-10-C](https://zenodo.org/record/2535967), but improvements on CIFAR-10-C may be much less indicative of ImageNet-C improvements. Evaluation using the JPEGs above is strongly prefered to computing the corruptions in memory, so that evaluation is deterministic and consistent.
+Tiny ImageNet-C has 200 classes with images of size 64x64, while ImageNet-C has all 1000 classes where each image is the standard size. For even quicker experimentation, there is [CIFAR-10-C](https://zenodo.org/record/2535967) and [CIFAR-100-C](https://zenodo.org/record/3555552). Evaluation using the JPEGs above is strongly prefered to computing the corruptions in memory, so that evaluation is deterministic and consistent.
 
 ## ImageNet-C Leaderboard
 
