@@ -18,14 +18,17 @@ Tiny ImageNet-C has 200 classes with images of size 64x64, while ImageNet-C has 
 
 ImageNet-C Robustness with a ResNet-50 Backbone
 
-|                Method               |                              Reference                             |   mCE   |
-|-------------------------------------|--------------------------------------------------------------------|:-------:|
-| Stylized ImageNet Data Augmentation | [Geirhos et al.](https://arxiv.org/pdf/1811.12231.pdf) (ICLR 2019) | 69.3%   |
-| ResNet-50 Baseline                  |                                                                    | 76.7%   |
+|                Method               |                              Reference                             |   mCE   |    Clean Error |
+|-------------------------------------|--------------------------------------------------------------------|:-------:| :-------:|
+| [AugMix](https://github.com/google-research/augmix) | [Hendrycks and Mu et al.](https://arxiv.org/pdf/1912.02781.pdf) (ICLR 2020) | 65.3%   |  22.47%
+| Stylized ImageNet Data Augmentation | [Geirhos et al.](https://arxiv.org/pdf/1811.12231.pdf) (ICLR 2019) | 69.3%   |  25.41%
+| Patch Uniform | [Lopes et al.](https://arxiv.org/abs/1906.02611)  | 74.3%   |  24.5%
+| ResNet-50 Baseline                  |                                                                    | 76.7%   | 23.85%
 
 Other backbones can obtain better results. For example, a vanilla ResNeXt-101 has an mCE of 62.2%.
+Note Lopes et al. have a ResNet-50 backbone with an mCE of [80.6](https://openreview.net/pdf?id=S1gmrxHFvB#page=7&zoom=100,144,580), so their improvement is larger than what is immediately suggested by the table.
 
-Submit a pull request if you beat the state-of-the-art on ImageNet-C.
+Submit a pull request if you beat the state-of-the-art with a ResNet-50 backbone on ImageNet-C.
 
 ## AlexNet ImageNet-C Error
 
@@ -69,6 +72,7 @@ ImageNet-P Perturbation Robustness with a ResNet-50 Backbone
 
 |                Method               |                              Reference                             |   mFR   |   mT5D   |
 |-------------------------------------|--------------------------------------------------------------------|:-------:|:-------:|
+| [AugMix](https://github.com/google-research/augmix) | [Hendrycks and Mu et al.](https://arxiv.org/pdf/1912.02781.pdf) (ICLR 2020)              |   37.4%  |    |
 | Low Pass Filter Pooling (bin-5)     | [Zhang](https://arxiv.org/abs/1904.11486) (ICML 2019)              | 51.2%   | 71.9%   |
 | ResNet-50 Baseline                  |                                                                    | 58.0%   | 78.4%   |
 
