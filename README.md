@@ -18,18 +18,18 @@ Tiny ImageNet-C has 200 classes with images of size 64x64, while ImageNet-C has 
 
 ImageNet-C Robustness with a ResNet-50 Backbone trained on ImageNet-1K and evaluated on 224x224x3 images.
 
-|                Method               |                              Reference                             | Single? |   mCE   |    Clean Error |
-|-------------------------------------|--------------------------------------------------------------------|:-------:|:-------:| :-------:|
+|                Method               |                              Reference                             | Standalone? |   mCE   |    Clean Error |
+|-------------------------------|------------------------------------------------------------------------|:-------:|:-------:| :-------:|
 | [Assemble-ResNet50](https://github.com/clovaai/assembled-cnn) | [Lee et al.](https://arxiv.org/abs/2001.06268) | No | 56.5%   |  17.90%
 | [AugMix](https://github.com/google-research/augmix) | [Hendrycks and Mu et al.](https://arxiv.org/pdf/1912.02781.pdf) (ICLR 2020) | Yes | 65.3%   |  22.47%
 | [Speckle](https://github.com/bethgelab/game-of-noise) | [Rusak et al.](https://arxiv.org/abs/2001.06057) | Yes | 68%   |  24.2%
-| Stylized ImageNet Data Augmentation | [Geirhos et al.](https://arxiv.org/pdf/1811.12231.pdf) (ICLR 2019) | Yes | 69.3%   |  25.41%
+| [Stylized ImageNet](https://github.com/rgeirhos/Stylized-ImageNet) | [Geirhos et al.](https://arxiv.org/pdf/1811.12231.pdf) (ICLR 2019) | Yes | 69.3%   |  25.41%
 | Patch Uniform | [Lopes et al.](https://arxiv.org/abs/1906.02611) | Yes | 74.3%   |  24.5%
 | ResNet-50 Baseline                  |                                                               | N/A    | 76.7%   | 23.85%
 
-"Single" indicates whether the method is a combination of techniques or a standalone/single method. Combining methods and proposing standalone methods are both valuable but not necessarily commensurable.
+"Standalone" indicates whether the method is a combination of techniques or a standalone/single method. Combining methods and proposing standalone methods are both valuable but not necessarily commensurable.
 
-Be sure to check each paper for results on all 15 corruptions, as some of these techniques improve robustness on all and some help on some and hurt on others. Other backbones can obtain better results. For example, a vanilla ResNeXt-101 has an mCE of 62.2%. Note Lopes et al. have a ResNet-50 backbone with an mCE of [80.6](https://openreview.net/pdf?id=S1gmrxHFvB#page=7&zoom=100,144,580), so their improvement is larger than what is immediately suggested by the table.
+Be sure to check each paper for results on all 15 corruptions, as some of these techniques improve robustness on all corruptions, and some methods help on some corruptions and hurt on others. Other backbones can obtain better results. For example, a vanilla ResNeXt-101 has an mCE of 62.2%. Note Lopes et al. have a ResNet-50 backbone with an mCE of [80.6](https://openreview.net/pdf?id=S1gmrxHFvB#page=7&zoom=100,144,580), so their improvement is larger than what is immediately suggested by the table.
 
 Submit a pull request if you beat the state-of-the-art on ImageNet-C with a ResNet-50 backbone.
 
