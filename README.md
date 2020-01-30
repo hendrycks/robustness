@@ -20,6 +20,7 @@ ImageNet-C Robustness with a ResNet-50 Backbone
 
 |                Method               |                              Reference                             |   mCE   |    Clean Error |
 |-------------------------------------|--------------------------------------------------------------------|:-------:| :-------:|
+| [Assemble-Resnet50](https://github.com/clovaai/assembled-cnn) | [Lee et al.](https://arxiv.org/abs/2001.06268) | 54.1%   |  17.31%
 | [AugMix](https://github.com/google-research/augmix) | [Hendrycks and Mu et al.](https://arxiv.org/pdf/1912.02781.pdf) (ICLR 2020) | 65.3%   |  22.47%
 | Stylized ImageNet Data Augmentation | [Geirhos et al.](https://arxiv.org/pdf/1811.12231.pdf) (ICLR 2019) | 69.3%   |  25.41%
 | Patch Uniform | [Lopes et al.](https://arxiv.org/abs/1906.02611)  | 74.3%   |  24.5%
