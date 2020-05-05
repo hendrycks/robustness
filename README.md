@@ -33,31 +33,9 @@ Be sure to check each paper for results on all 15 corruptions, as some of these 
 
 Submit a pull request if you beat the state-of-the-art on ImageNet-C with a ResNet-50 backbone.
 
-## AlexNet ImageNet-C Error
+## Calculating the mCE
 
-Use these values to normalize raw corruption error to calculate mCE:
-
-|    Corruption    | Average    | Severity 1 | Severity 2 | Severity 3 | Severity 4 | Severity 5 |
-|------------------|------------|------------|------------|------------|------------|------------|
-| Gaussian Noise   | 0.886428   | 0.69528    | 0.82542    | 0.93554    | 0.98138    | 0.99452    |
-| Shot Noise       | 0.894468   | 0.71224    | 0.85108    | 0.93574    | 0.98182    | 0.99146    |
-| Impulse Noise    | 0.922640   | 0.78374    | 0.89808    | 0.94870    | 0.98720    | 0.99548    |
-| Defocus Blur     | 0.819880   | 0.65624    | 0.73202    | 0.85036    | 0.91364    | 0.94714    |
-| Glass Blur       | 0.826268   | 0.64308    | 0.75054    | 0.88806    | 0.91622    | 0.93344    |
-| Motion Blur      | 0.785948   | 0.58430    | 0.70048    | 0.82108    | 0.89750    | 0.92638    |
-| Zoom Blur        | 0.798360   | 0.70008    | 0.76992    | 0.80784    | 0.84198    | 0.87198    |
-| Snow             | 0.866816   | 0.71726    | 0.88392    | 0.86468    | 0.91870    | 0.94952    |
-| Frost            | 0.826572   | 0.61390    | 0.79734    | 0.88790    | 0.89942    | 0.93430    |
-| Fog              | 0.819324   | 0.67474    | 0.76050    | 0.84378    | 0.87260    | 0.94500    |
-| Brightness       | 0.564592   | 0.45140    | 0.48502    | 0.54048    | 0.62166    | 0.72440    |
-| Contrast         | 0.853204   | 0.64548    | 0.76150    | 0.88874    | 0.97760    | 0.99270    |
-| Elastic          | 0.646056   | 0.52596    | 0.70116    | 0.55686    | 0.64076    | 0.80554    |
-| Pixelate         | 0.717840   | 0.52218    | 0.54620    | 0.73728    | 0.87092    | 0.91262    |
-| JPEG Compression | 0.606500   | 0.51002    | 0.54718    | 0.57294    | 0.65458    | 0.74778    |
-| Speckle Noise    | 0.845388   | 0.66192    | 0.74440    | 0.90246    | 0.94548    | 0.97268    |
-| Gaussian Blur    | 0.787108   | 0.54732    | 0.70444    | 0.82574    | 0.89864    | 0.95940    |
-| Spatter          | 0.717512   | 0.47196    | 0.62194    | 0.75052    | 0.84132    | 0.90182    |
-| Saturate         | 0.658248   | 0.59342    | 0.65514    | 0.51174    | 0.70834    | 0.82260    |
+This spreadsheet shows how to calculate the [mean Corruption Error](https://docs.google.com/spreadsheets/d/1RwqofJPHhtdRPG-dDO7wPp-aGn-AmwmU5-rpvTzrMHw/edit?usp=sharing).
 
 ## ImageNet-P
 
