@@ -20,7 +20,7 @@ ImageNet-C Robustness with a ResNet-50 Backbone trained on ImageNet-1K and evalu
 
 |                Method               |                              Reference                             | Standalone? |   mCE   |    Clean Error |
 |-------------------------------|------------------------------------------------------------------------|:-------:|:-------:| :-------:|
-| [DeepAugment+AugMix](https://github.com/hendrycks/imagenet-r) | Hendrycks et al. | No | 53.6%   |  24.2%
+| [DeepAugment+AugMix](https://github.com/hendrycks/imagenet-r) | [Hendrycks et al.](https://arxiv.org/abs/2006.16241) | No | 53.6%   |  24.2%
 | [Assemble-ResNet50](https://github.com/clovaai/assembled-cnn) | [Lee et al.](https://arxiv.org/abs/2001.06268) | No | 56.5%   |  17.90%
 | [ANT (3x3)](https://github.com/bethgelab/game-of-noise) | [Rusak and Schott et al.](https://arxiv.org/abs/2001.06057) | Yes | 63%   |  23.9%
 | [AugMix](https://github.com/google-research/augmix) | [Hendrycks and Mu et al.](https://arxiv.org/pdf/1912.02781.pdf) (ICLR 2020) | Yes | 65.3%   |  22.47%
