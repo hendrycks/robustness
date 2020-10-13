@@ -34,6 +34,13 @@ Be sure to check each paper for results on all 15 corruptions, as some of these 
 
 Submit a pull request if you beat the state-of-the-art on ImageNet-C with a ResNet-50 backbone.
 
+### UPDATE: New Robustness Benchmarks
+
+For other distribution shift benchmarks like ImageNet-C, consider datasets like [ImageNet-A](https://github.com/hendrycks/natural-adv-examples) or [ImageNet-R](https://github.com/hendrycks/imagenet-r/).
+
+ImageNet-A contains real-world, unmodified natural images that cause model accuracy to substantially degrade. ImageNet-R(endition) has 30,000 renditions of ImageNet classes cocering art, cartoons, deviantart, graffiti, embroidery, graphics, origami, paintings, patterns, plastic objects, plush objects, sculptures, sketches, tattoos, toys, and video games.
+
+
 ## Calculating the mCE
 
 This spreadsheet shows how to calculate the [mean Corruption Error](https://docs.google.com/spreadsheets/d/1RwqofJPHhtdRPG-dDO7wPp-aGn-AmwmU5-rpvTzrMHw/edit?usp=sharing).
