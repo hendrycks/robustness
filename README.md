@@ -26,7 +26,9 @@ ImageNet-C Robustness with a ResNet-50 Backbone trained on ImageNet-1K and evalu
 | BlurAfterConv | [Vasconcelos et al.](https://arxiv.org/abs/2011.10675)| Yes | 64.9%   |   21.2%
 | [AugMix](https://github.com/google-research/augmix) | [Hendrycks and Mu et al.](https://arxiv.org/pdf/1912.02781.pdf) (ICLR 2020) | Yes | 65.3%   |  22.47%
 | [Stylized ImageNet](https://github.com/rgeirhos/Stylized-ImageNet) | [Geirhos et al.](https://arxiv.org/pdf/1811.12231.pdf) (ICLR 2019) | Yes | 69.3%   |  25.41%
+| [Group-wise Inhibition+DataAug](https://github.com/LinusWu/TENET_Training) | [Liu et al.](https://openaccess.thecvf.com/content/ICCV2021/papers/Liu_Group-Wise_Inhibition_Based_Feature_Regularization_for_Robust_Classification_ICCV_2021_paper.pdf) (ICCV2021) | No | 69.6% | 22.4% 
 | Patch Uniform | [Lopes et al.](https://arxiv.org/abs/1906.02611) | Yes | 74.3%   |  24.5%
+| [Group-wise Inhibition](https://github.com/LinusWu/TENET_Training) | [Liu et al.](https://openaccess.thecvf.com/content/ICCV2021/papers/Liu_Group-Wise_Inhibition_Based_Feature_Regularization_for_Robust_Classification_ICCV_2021_paper.pdf) (ICCV2021) | Yes | 75.3% | 23.1% 
 | ResNet-50 Baseline                  |                                                               | N/A    | 76.7%   | 23.85%
 
 "Standalone" indicates whether the method is a combination of techniques or a standalone/single method. Combining methods and proposing standalone methods are both valuable but not necessarily commensurable.
