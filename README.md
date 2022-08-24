@@ -58,6 +58,10 @@ This spreadsheet shows how to calculate the [mean Corruption Error](https://docs
 
 [Download ImageNet-P here.](https://zenodo.org/record/3565846) [(Mirror.)](https://drive.google.com/drive/folders/1vRrDaWA6-_GaUZqOmovWrr4W34aiSLu7?usp=sharing)
 
+[Download CIFAR-10-P here.](https://drive.google.com/drive/folders/1dY1_zeRyjMKdfmMbQ_uK8O1i0MVI9UbZ?usp=sharing)
+
+[Download CIFAR-100-P here.](https://drive.google.com/drive/folders/1Tpssw4Vn6X_4hmIW8KK5LzkKCZpAaae8?usp=sharing)
+
 ## ImageNet-P Leaderboard
 
 ImageNet-P Perturbation Robustness with a ResNet-50 Backbone
