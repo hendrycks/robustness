@@ -31,3 +31,16 @@ def corrupt(x, severity=1, corruption_name=None, corruption_number=-1):
 ```
 
 The "frost" corruption only works should the package be [installed from source](https://github.com/hendrycks/robustness/issues/4#issuecomment-427226016). 
+
+
+## NOTE : Installation on MAC (2025 update)
+Incase of : `ImportError: MagickWand shared library not found.`
+Try : 
+(assuming homebrew is present)
+```(bash)
+pip install Wand==0.4.4 --upgrade # Default pip installation installed Wand 0.6
+brew install imagemagick@6
+export MAGICK_HOME=$(brew --prefix imagemagick@6) 
+```
+
+To avoid exporting MAGICK_HOME everything, Add this to your `.zshrc` or `.bash_profile`
